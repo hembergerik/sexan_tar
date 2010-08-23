@@ -14,8 +14,11 @@ class RandomPlayer:
 
 class RandomCheapPlayer(RandomPlayer):
     def select_pile(self, piles, hand):
-        cheapest = min(len(pile) for pile in piles)
-        all_cheap = [pile for pile in piles if len(pile) == cheapest]
+        def pile_cost(pile):
+            return sum([card.cost for card in pile])
+
+        cheapest = min(pile_cost(pile) for pile in piles)
+        all_cheap = [pile for pile in piles if pile_cost(pile) == cheapest]
         return random_choice(all_cheap)
 
 class SortedPlayer(RandomPlayer):
